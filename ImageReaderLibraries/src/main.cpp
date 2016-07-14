@@ -22,10 +22,16 @@ main(int argc, char *argv[]) {
   uchar* outPtr = nullptr;
   int width = 0, height = 0, channel = 0;
   {
-      auto decoder = DecoderFactory::getDecoder(BaseImage::ImageFormat::PNG);
-      decoder->Decoder(argv[1], outPtr, width, height, channel);
-      delete decoder;
-      decoder = nullptr;
+      auto decoder = Decoder::getDecoder(BaseImage::ImageFormat::PNG);
+
+      std::ifstream file(argv[1], std::ifstream::binary | std::ifstream::ate);
+      std::size_t fileSize = file.tellg();
+      file.seekg(std::ifstream::beg);
+      std::vector<uchar> encodedPtr(fileSize, 0);
+      file.read(reinterpret_cast<char*>(encodedPtr.data()), fileSize);
+
+      std::vector<uchar> outPtr;
+      decoder->decode(encodedPtr, outPtr, width, height, channel);
   }
 
   std::cout

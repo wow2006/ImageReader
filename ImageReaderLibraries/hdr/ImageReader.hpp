@@ -23,20 +23,21 @@ public:
   BaseImage(const std::string &_imageName);
   virtual ~BaseImage();
 
-  inline uchar *get() { return mImagePtr; }
-  inline uint getWidth() { return mWidth; }
-  inline uint getheight() { return mHeight; }
+  inline uchar *get() { return mImagePtr.data(); }
+  inline int getWidth() const { return mWidth; }
+  inline int getHeight() const { return mHeight; }
+  inline int getChannels() const { return mChannels; }
 
 protected:
   ImageFormat mImageFormat = ImageFormat::None;
-  uchar *mImagePtr = nullptr;
-  uint mWidth = 0;
-  uint mHeight = 0;
+  std::vector<uchar> mImagePtr;
+  int mWidth = 0;
+  int mHeight = 0;
+  int mChannels = 0;
   PixelFormat mFormat = PixelFormat::None;
 
 private:
-  static void readImage(const uchar *_ptr, const int _fileSize,
-                        ImageFormat &_imageFormat);
+  static void readImage(std::vector<uchar> _ptr, ImageFormat &_imageFormat);
   BaseImage(const BaseImage &) = delete;
   void operator=(const BaseImage &) = delete;
 };

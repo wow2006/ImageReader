@@ -4,20 +4,19 @@
 #pragma once
 #include "Common.hpp"
 #include "ImageReader.hpp"
+#include <memory>
 
-class DecoderInterface {
-public:
-    virtual ~DecoderInterface(){
-    }
-	 virtual bool Decoder(const std::string _fileName, uchar *&_outPtr,
-		int &_width, int &_height, int &_channel) = 0;
-};
+namespace Decoder{
+    class DecoderInterface{
+    public:
+        virtual ~DecoderInterface(){}
 
-class DecoderFactory {
-public:
-	static DecoderInterface*
-	getDecoder(BaseImage::ImageFormat _format);
-};
+        virtual bool decode(std::vector<uchar>& _inputPtr, std::vector<uchar>&_output,
+                             int &_width, int &_height, int &_channel) = 0;
+    };
+
+    std::unique_ptr<DecoderInterface> getDecoder(BaseImage::ImageFormat _format);
+}
 
 
 #endif // !DECODER_HPP

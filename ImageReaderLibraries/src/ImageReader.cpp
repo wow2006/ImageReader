@@ -1,5 +1,6 @@
 #include <cstring>
 #include "ImageReader.hpp"
+#include "Decoder.hpp"
 
 namespace ImageFormatUtility {
 static bool checkJPEG(uchar header[4]) {
@@ -64,28 +65,25 @@ BaseImage::BaseImage(const std::string &_imageName) {
     auto fileSize = file.tellg();
     file.seekg(std::ifstream::beg);
 
-    auto ptr = new uchar[fileSize]{0};
-    file.read(reinterpret_cast<char *>(ptr), fileSize);
+    auto ptr = std::vector<uchar>(fileSize, 0);
+    file.read(reinterpret_cast<char *>(ptr.data()), fileSize);
 
-    readImage(ptr, fileSize, mImageFormat);
+    readImage(ptr, mImageFormat);
 
-    delete[] ptr;
+    auto decoder = Decoder::getDecoder(mImageFormat);
+    decoder->decode(ptr, mImagePtr, mWidth, mHeight, mChannels);
   }
   file.close();
 }
 
 BaseImage::~BaseImage() {
-  if (mImagePtr != nullptr) {
-    delete[] mImagePtr;
-    mImagePtr = nullptr;
-  }
 }
 
-void BaseImage::readImage(const uchar *_ptr, const int _fileSize,
+void BaseImage::readImage(std::vector<uchar> _ptr,
                           ImageFormat &_imageFormat) {
   uchar header[8]{0};
 
-  std::memcpy(header, _ptr, 8);
+  std::memcpy(header, _ptr.data(), 8);
 
   if (checkJPEG(header))
     _imageFormat = ImageFormat::JPEG;

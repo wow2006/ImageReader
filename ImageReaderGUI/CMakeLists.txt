@@ -12,10 +12,10 @@ QT5_WRAP_UI(UIS_HDRS
     ${ui}
 )
 
-message(${CMAKE_CURRENT_BINARY_DIR}/../ImageReaderLibraries/)
-
 add_executable(${PROJECT_NAME} ${src} ${hdr} ${UIS_HDRS})
 qt5_use_modules(${PROJECT_NAME} Widgets)
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES}
-    ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${QT_LIBRARIES}
+    ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${QT_LIBRARIES} -ljpeg -lturbojpeg
     "${CMAKE_CURRENT_BINARY_DIR}/../ImageReaderLibraries/libImageViewerLibraries.a")
+
+message("CMAKE_CURRENT_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}")

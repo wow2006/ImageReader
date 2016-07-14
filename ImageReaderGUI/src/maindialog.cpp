@@ -3,6 +3,7 @@
 #include "Decoder.hpp"
 #include <iostream>
 #include <QFileDialog>
+#include <QDebug>
 #include <QString>
 
 mainDialog::mainDialog(QWidget *parent) :
@@ -25,21 +26,13 @@ void mainDialog::on_openFileButton_clicked()
                                                     tr("Image Files (*.png *.jpg *.bmp)"));
     std::string fileName = _fileName.toStdString();
 
-    uchar* ptr = nullptr;
-    int width = 0, height = 0, channels = 0;
+    BaseImage _image(fileName);
 
-    auto decoder = DecoderFactory::getDecoder(BaseImage::ImageFormat::PNG);
-    decoder->Decoder(fileName, ptr, width, height, channels);
+    qDebug() << _image.getWidth() << ", " <<  _image.getHeight() << '\n';
 
-    std::cout << fileName << " ("
-              << width << ", "
-              << height << ")\n";
-
-    QImage image(ptr, width, height, QImage::Format_RGB888);
+    QImage image(_image.get(), _image.getWidth(), _image.getHeight(),
+                 (_image.getChannels() == 3) ? QImage::Format_RGB888 : QImage::Format_Grayscale8);
     ui->imageLabel->setPixmap(QPixmap::fromImage(image));
-
-    delete decoder;
-    delete[] ptr;
 }
 
 void mainDialog::on_saveFileButton_clicked()
