@@ -2,6 +2,7 @@
 #define MAINDIALOG_H
 
 #include <QDialog>
+#include "ImageReader.hpp"
 
 namespace Ui {
 class mainDialog;
@@ -22,6 +23,8 @@ private slots:
 
 private:
     Ui::mainDialog *ui;
+    unsigned char* ptr = nullptr;
+    BaseImage _image;
 };
 
 #endif // MAINDIALOG_H

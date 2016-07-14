@@ -1,6 +1,7 @@
 #include "maindialog.h"
 #include "ui_maindialog.h"
 #include "Decoder.hpp"
+#include "Encoder.hpp"
 #include <iostream>
 #include <QFileDialog>
 #include <QDebug>
@@ -26,7 +27,8 @@ void mainDialog::on_openFileButton_clicked()
                                                     tr("Image Files (*.png *.jpg *.bmp)"));
     std::string fileName = _fileName.toStdString();
 
-    BaseImage _image(fileName);
+    _image.read(fileName);
+    ptr = _image.get();
 
     qDebug() << _image.getWidth() << ", " <<  _image.getHeight() << '\n';
 
@@ -42,4 +44,14 @@ void mainDialog::on_saveFileButton_clicked()
                                                     "/home/fedora/Documents/SourceCode/ImageReader/",
                                                     tr("Image Files (*.png *.jpg *.bmp)"));
     std::cout << fileName.toStdString() << '\n';
+
+    std::vector<uchar> output;
+    std::size_t fileSize = 0;
+    auto encoder = Encoder::getEncoder(BaseImage::ImageFormat::PNG);
+    encoder->encode(_image.get(), _image.getWidth(), _image.getHeight(), _image.getChannels(),
+                    output, fileSize);
+
+    std::ofstream filehandler(fileName.toStdString(), std::ofstream::binary);
+    filehandler.write(reinterpret_cast<char*>(output.data()), fileSize);
+    filehandler.close();
 }

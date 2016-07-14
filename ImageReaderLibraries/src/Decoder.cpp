@@ -45,11 +45,6 @@ namespace Decoder{
 
     class PNG_Decoder : public DecoderInterface {
     public:
-        PNG_Decoder() {
-        }
-
-        virtual ~PNG_Decoder() {
-        }
         // Inherited via DecoderFactory
         bool decode(std::vector<uchar>& _inputPtr, std::vector<uchar>&_outPtr,
                           int &_width, int &_height, int &_channel) override{
@@ -75,6 +70,17 @@ namespace Decoder{
 
                 return true;
             }
+            return false;
+        }
+    };
+
+    class TiffDecoder : public DecoderInterface{
+    public:
+        ~TiffDecoder(){
+
+        }
+
+        bool decode(std::vector<uchar> &_inputPtr, std::vector<uchar> &_output, int &_width, int &_height, int &_channel){
             return false;
         }
     };

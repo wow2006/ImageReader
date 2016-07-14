@@ -59,21 +59,28 @@ static bool checkTIF(uchar header[4]) {
 using namespace ImageFormatUtility;
 
 BaseImage::BaseImage(const std::string &_imageName) {
-  // Read Image
-  std::ifstream file(_imageName, std::ifstream::binary | std::ifstream::ate);
-  if (file.is_open()) {
+    read(_imageName);
+}
+
+bool
+BaseImage::read(const std::string &_imageName){
+    // Read Image
+    std::ifstream file(_imageName, std::ifstream::binary | std::ifstream::ate);
+    if (!file.is_open())
+        return false;
+
     auto fileSize = file.tellg();
     file.seekg(std::ifstream::beg);
 
     auto ptr = std::vector<uchar>(fileSize, 0);
     file.read(reinterpret_cast<char *>(ptr.data()), fileSize);
+    file.close();
 
     readImage(ptr, mImageFormat);
 
     auto decoder = Decoder::getDecoder(mImageFormat);
     decoder->decode(ptr, mImagePtr, mWidth, mHeight, mChannels);
-  }
-  file.close();
+    return true;
 }
 
 BaseImage::~BaseImage() {

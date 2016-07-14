@@ -20,8 +20,11 @@ public:
       NV12
   };
 
+  BaseImage(){}
   BaseImage(const std::string &_imageName);
   virtual ~BaseImage();
+
+  bool read(const std::string &_imageName);
 
   inline uchar *get() { return mImagePtr.data(); }
   inline int getWidth() const { return mWidth; }
