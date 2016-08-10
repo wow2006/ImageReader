@@ -1,4 +1,5 @@
-- GTest IBM
-  http://www.ibm.com/developerworks/aix/library/au-googletestingframework.html
+# ImageReader WIP
+-Read/Write PNG, JPEG and TIFF.
+-Implement Basic Image processing operations.
 
-- Start at Tiff
+Feel free to give advice.
