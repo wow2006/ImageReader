@@ -2,6 +2,16 @@
 #define IMAGE_READER_HPP
 #include "Common.hpp"
 
+struct rowAccess{
+    rowAccess(uchar* _ptr) : temp(_ptr){
+
+    }
+    uchar* temp = nullptr;
+    RGB<uchar> operator[](const int _index){
+        return *reinterpret_cast<RGB<uchar>*>(&temp[_index * 3]);
+    }
+};
+
 class BaseImage {
 public:
   enum class ImageFormat {
@@ -30,6 +40,9 @@ public:
   inline int getWidth() const { return mWidth; }
   inline int getHeight() const { return mHeight; }
   inline int getChannels() const { return mChannels; }
+  inline rowAccess operator[](const int _index){
+      return rowAccess(&mImagePtr[_index * mWidth * mChannels]);
+  }
 
 protected:
   ImageFormat mImageFormat = ImageFormat::None;

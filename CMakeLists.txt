@@ -11,4 +11,7 @@ add_subdirectory(ImageReaderLibraries)
 add_subdirectory(ImageReaderGUI)
 
 # TODO
-#find_package(GTest REQUIRED)
+option(TestCase OFF "Enable Test Case")
+if(${TestCase})
+    add_subdirectory(test)
+endif()

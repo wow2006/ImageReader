@@ -76,7 +76,9 @@ flags = [
 '-I',
 '/usr/include/c++/5.3.1/',
 '-I',
-'./hdr',
+'./ImageReaderGUI/hdr',
+'-I',
+'./ImageReaderLibraries/hdr',
 ]
 
 

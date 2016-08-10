@@ -47,8 +47,10 @@ static bool checkTIF(uchar header[4]) {
 
   i = -1;
   if (!match) {
+    match = true;
     for (const auto &item : TIF_HEX_I) {
-      match &= (item == header[++i]);
+        auto v = (item == header[++i]);
+        match &= v;
     }
   }
 

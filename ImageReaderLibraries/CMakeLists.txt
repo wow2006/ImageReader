@@ -18,6 +18,7 @@ target_link_libraries(
     ${PNG_LIBRARIES}
     ${JPEG_LIBRARY}
     ${Boost_LIBRARIES}
+    ${TIFF_LIBRARIES} tiffxx
     turbojpeg
 )
 target_include_directories(

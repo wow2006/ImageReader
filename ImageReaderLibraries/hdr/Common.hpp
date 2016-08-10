@@ -1,5 +1,5 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef COMMON_HPP
+#define COMMON_HPP
 
 #pragma once
 #include <sstream>
@@ -23,11 +23,11 @@ struct Timer{
     }
 
     template<class _castTime>
-    std::string end()
+    double end()
     {
         auto t2 = std::chrono::high_resolution_clock::now();
 
-        return std::to_string(std::chrono::duration_cast<_castTime>(t2-t1).count());
+        return std::chrono::duration_cast<_castTime>(t2-t1).count();
     }
 
 protected:
@@ -50,4 +50,4 @@ writeImage(const std::string& _imageName, char* _data, const std::size_t fileSiz
 
 using RGB8 = RGB<uchar>;
 
-#endif //COMMON_H
+#endif //COMMON_HPP

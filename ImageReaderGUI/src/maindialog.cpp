@@ -24,7 +24,7 @@ void mainDialog::on_openFileButton_clicked()
     QString _fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Image"),
                                                     "/home/fedora/Documents/SourceCode/ImageReader/",
-                                                    tr("Image Files (*.png *.jpg *.bmp)"));
+                                                    tr("Image Files (*.png *.jpg *.bmp *tiff)"));
     std::string fileName = _fileName.toStdString();
 
     _image.read(fileName);
@@ -33,7 +33,8 @@ void mainDialog::on_openFileButton_clicked()
     qDebug() << _image.getWidth() << ", " <<  _image.getHeight() << '\n';
 
     QImage image(_image.get(), _image.getWidth(), _image.getHeight(),
-                 (_image.getChannels() == 3) ? QImage::Format_RGB888 : QImage::Format_Grayscale8);
+                 // Find Better way to wrap our format with Qt Format
+                 QImage::Format_RGBA8888);
     ui->imageLabel->setPixmap(QPixmap::fromImage(image));
 }
 
