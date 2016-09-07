@@ -1,9 +1,16 @@
 #include "Encoder.hpp"
 #include <cstring>
+#include <streambuf>
 #include <cstdio>
 #include <png.h>
 #include <turbojpeg.h>
 
+#include <tiffio.h>
+#include <tiffio.hxx>
+#include <sstream>
+
+#include <boost/interprocess/streams/bufferstream.hpp>
+using namespace boost::interprocess;
 
 namespace Encoder {
 static inline void writeBinary(const std::string &_fileName, char *_ptr,
@@ -40,6 +47,16 @@ protected:
   png_infop mInfo_ptr = nullptr;
 };
 
+class TiffEncoder : public EncoderInterface{
+public:
+
+public:
+    bool encode(uchar *_uncompressedPtr, const int _width, const int _height, const int _channels,
+                std::vector<uchar> &_compressedPtr, std::size_t &_fileSize, const int JPEG_QUALITY){
+            return false;
+        }
+};
+
 std::unique_ptr<EncoderInterface>
 getEncoder(BaseImage::ImageFormat _format) {
     std::unique_ptr<EncoderInterface> temp;
@@ -49,6 +66,9 @@ getEncoder(BaseImage::ImageFormat _format) {
         break;
         case BaseImage::ImageFormat::JPEG:
             temp.reset(new JpegEncoder());
+        break;
+    case BaseImage::ImageFormat::TIF:
+            temp.reset(new TiffEncoder());
         break;
   }
   return std::move(temp);

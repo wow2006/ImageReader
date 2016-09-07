@@ -11,7 +11,6 @@
 #include <tiffio.hxx>
 #include <sstream>
 
-
 #include <boost/interprocess/streams/bufferstream.hpp>
 using namespace boost::interprocess;
 
@@ -49,7 +48,6 @@ namespace Decoder{
 
     class PNG_Decoder : public DecoderInterface {
     public:
-        // Inherited via DecoderFactory
         bool decode(std::vector<uchar>& _inputPtr, std::vector<uchar>&_outPtr,
                           int &_width, int &_height, int &_channel) override{
 
@@ -103,7 +101,7 @@ namespace Decoder{
 
     std::unique_ptr<DecoderInterface>
     getDecoder(BaseImage::ImageFormat _format) {
-        std::unique_ptr<DecoderInterface> decoder;
+        std::unique_ptr<DecoderInterface> decoder(nullptr);
 
         switch (_format)
         {

@@ -18,5 +18,4 @@ namespace Decoder{
     std::unique_ptr<DecoderInterface> getDecoder(BaseImage::ImageFormat _format);
 }
 
-
 #endif // !DECODER_HPP

@@ -66,7 +66,6 @@ BaseImage::BaseImage(const std::string &_imageName) {
 
 bool
 BaseImage::read(const std::string &_imageName){
-    // Read Image
     std::ifstream file(_imageName, std::ifstream::binary | std::ifstream::ate);
     if (!file.is_open())
         return false;
@@ -81,14 +80,15 @@ BaseImage::read(const std::string &_imageName){
     readImage(ptr, mImageFormat);
 
     auto decoder = Decoder::getDecoder(mImageFormat);
-    decoder->decode(ptr, mImagePtr, mWidth, mHeight, mChannels);
-    return true;
+    if(decoder)
+        return decoder->decode(ptr, mImagePtr, mWidth, mHeight, mChannels);
+    return false;
 }
 
 BaseImage::~BaseImage() {
 }
 
-void BaseImage::readImage(std::vector<uchar> _ptr,
+void BaseImage::readImage(const std::vector<uchar>& _ptr,
                           ImageFormat &_imageFormat) {
   uchar header[8]{0};
 

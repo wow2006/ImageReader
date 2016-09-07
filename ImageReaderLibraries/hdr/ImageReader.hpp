@@ -53,7 +53,7 @@ protected:
   PixelFormat mFormat = PixelFormat::None;
 
 private:
-  static void readImage(std::vector<uchar> _ptr, ImageFormat &_imageFormat);
+  static void readImage(const std::vector<uchar>&, ImageFormat &_imageFormat);
   BaseImage(const BaseImage &) = delete;
   void operator=(const BaseImage &) = delete;
 };

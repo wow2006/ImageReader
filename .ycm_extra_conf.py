@@ -67,18 +67,19 @@ flags = [
 '../llvm/include',
 '-isystem',
 '../llvm/tools/clang/include',
-'-I',
-'.',
-'-I',
-'/usr/include',
-'-I',
-'/usr/local/include',
-'-I',
-'/usr/include/c++/5.3.1/',
-'-I',
-'./ImageReaderGUI/hdr',
-'-I',
-'./ImageReaderLibraries/hdr',
+# Global
+'-I', '/usr/include',
+'-I', '/usr/local/include',
+'-I', '/usr/include/c++/5.3.1/',
+'-I', '/usr/include/qt',
+'-I', '/usr/include/qt/QtCore',
+'-I', '/usr/include/qt/QtGui',
+'-I', '/usr/include/qt/QtWidgets',
+# Project
+'-I', '.',
+'-I', './ImageReaderGUI/hdr',
+'-I', './ImageReaderLibraries/hdr',
+'-I', './build/Debug/ImageReaderGUI',
 ]
 
 
