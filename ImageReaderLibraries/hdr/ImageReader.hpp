@@ -34,7 +34,8 @@ public:
   BaseImage(const std::string &_imageName);
   virtual ~BaseImage();
 
-  bool read(const std::string &_imageName);
+  bool open(const std::string &_imageName);
+  bool save(const std::string &_imageName, const int JPEG_QUALITY = 75);
 
   inline uchar *get() { return mImagePtr.data(); }
   inline int getWidth() const { return mWidth; }

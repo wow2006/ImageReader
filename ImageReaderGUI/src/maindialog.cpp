@@ -27,7 +27,7 @@ void mainDialog::on_openFileButton_clicked()
                                                     tr("Image Files (*.png *.jpg *.bmp *tiff)"));
     std::string fileName = _fileName.toStdString();
 
-    _image.read(fileName);
+    _image.open(fileName);
     ptr = _image.get();
 
     qDebug() << _image.getWidth() << ", " <<  _image.getHeight() << '\n';

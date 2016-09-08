@@ -36,20 +36,6 @@ auto readInputArgs(const int argc, char* argv[]){
     return pair(inputImage, outputImage);
 }
 #include "Encoder.hpp"
-#include <boost/algorithm/string.hpp>
-auto getDecoder(const std::string& _exten){
-    std::unique_ptr<Encoder::EncoderInterface> ptr;
-    if(_exten == "jpeg" || _exten == "jpg"){
-        ptr = Encoder::getEncoder(BaseImage::ImageFormat::JPEG);
-    }
-    else if(_exten == "png"){
-        ptr = Encoder::getEncoder(BaseImage::ImageFormat::PNG);
-    }
-    else if(_exten == "tif" || _exten == "tiff"){
-        ptr = Encoder::getEncoder(BaseImage::ImageFormat::TIF);
-    }
-    return std::move(ptr);
-}
 
 #include "maindialog.h"
 #include "ImageReader.hpp"
@@ -65,25 +51,11 @@ main(int argc, char* argv[]){
     }else{
         Timer t;
         std::cout << "Reading " << args.first << std::endl;
+
         BaseImage im(args.first);
-        auto ptr = im.get();
-
-        std::vector<std::string> strs;
-        {
-            boost::split(strs, args.second, boost::is_any_of("."));
-        }
-
-        auto encoder = getDecoder(boost::to_lower_copy(strs.back()));
-        std::vector<uchar> out;
-        std::size_t outSize = 0;
-        std::cout << "Encoding Image" << std::endl;
-        encoder->encode(ptr, 512, 512, 3, out, outSize);
-
-        std::cout << "Writing " << args.second << std::endl;
-        writeImage(args.second, reinterpret_cast<char*>(out.data()), outSize);
+        im.save(args.second);
 
         std::cout << "Done!\nIt take " << t.end<std::chrono::milliseconds>() << " ms\n";
-
     }
     return 0;
 }

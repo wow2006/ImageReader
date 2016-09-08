@@ -1,8 +1,31 @@
 #include <cstring>
+#include <boost/algorithm/string.hpp>
 #include "ImageReader.hpp"
 #include "Decoder.hpp"
+#include "Encoder.hpp"
 
 namespace ImageFormatUtility {
+
+auto getEncoder(const std::string& _fileName){
+    std::vector<std::string> strs;
+    {
+        boost::split(strs, _fileName, boost::is_any_of("."));
+    }
+    boost::to_lower(strs.back());
+    auto& exten = strs.back();
+    std::unique_ptr<Encoder::EncoderInterface> ptr;
+    if(exten == "jpeg" || exten == "jpg"){
+        ptr = Encoder::getEncoder(BaseImage::ImageFormat::JPEG);
+    }
+    else if(exten == "png"){
+        ptr = Encoder::getEncoder(BaseImage::ImageFormat::PNG);
+    }
+    else if(exten == "tif" || exten == "tiff"){
+        ptr = Encoder::getEncoder(BaseImage::ImageFormat::TIF);
+    }
+    return std::move(ptr);
+}
+
 static bool checkJPEG(uchar header[4]) {
   static constexpr int JPEG_HEX[] = {0xFF, 0xD8, 0xFF, 0xE0, 0xE1};
 
@@ -61,11 +84,11 @@ static bool checkTIF(uchar header[4]) {
 using namespace ImageFormatUtility;
 
 BaseImage::BaseImage(const std::string &_imageName) {
-    read(_imageName);
+    open(_imageName);
 }
 
 bool
-BaseImage::read(const std::string &_imageName){
+BaseImage::open(const std::string &_imageName){
     std::ifstream file(_imageName, std::ifstream::binary | std::ifstream::ate);
     if (!file.is_open())
         return false;
@@ -82,6 +105,19 @@ BaseImage::read(const std::string &_imageName){
     auto decoder = Decoder::getDecoder(mImageFormat);
     if(decoder)
         return decoder->decode(ptr, mImagePtr, mWidth, mHeight, mChannels);
+    return false;
+}
+
+bool BaseImage::save(const std::string &_imageName, const int JPEG_QUALITY) {
+    std::unique_ptr<Encoder::EncoderInterface> encoder = ImageFormatUtility::getEncoder(_imageName);
+    if(encoder){
+        std::vector<uchar> outputData;
+        std::size_t fileSize = 0;
+        encoder->encode(mImagePtr.data(), mWidth, mHeight, mChannels,
+                        outputData, fileSize, JPEG_QUALITY);
+        writeImage(_imageName, reinterpret_cast<char*>(outputData.data()), fileSize);
+        return true;
+    }
     return false;
 }
 

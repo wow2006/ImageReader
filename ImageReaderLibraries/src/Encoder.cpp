@@ -13,12 +13,6 @@
 using namespace boost::interprocess;
 
 namespace Encoder {
-static inline void writeBinary(const std::string &_fileName, char *_ptr,
-                               const std::size_t _fileSize) {
-  std::ofstream fileHandler(_fileName);
-  fileHandler.write(_ptr, _fileSize);
-  fileHandler.close();
-}
 
 class JpegEncoder : public EncoderInterface {
 public:
@@ -52,9 +46,9 @@ public:
 
 public:
     bool encode(uchar *_uncompressedPtr, const int _width, const int _height, const int _channels,
-                std::vector<uchar> &_compressedPtr, std::size_t &_fileSize, const int JPEG_QUALITY){
-            return false;
-        }
+                std::vector<uchar> &_compressedPtr, std::size_t &_fileSize, const int JPEG_QUALITY) {
+        return false;
+    }
 };
 
 std::unique_ptr<EncoderInterface>
@@ -69,6 +63,12 @@ getEncoder(BaseImage::ImageFormat _format) {
         break;
     case BaseImage::ImageFormat::TIF:
             temp.reset(new TiffEncoder());
+        break;
+    case BaseImage::ImageFormat::GIF:
+        std::runtime_error("GIF is not supported!");
+        break;
+    case BaseImage::ImageFormat::None:
+        std::runtime_error("No Supprted Format Found!");
         break;
   }
   return std::move(temp);
