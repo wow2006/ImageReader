@@ -1,12 +1,11 @@
 #include "Encoder.hpp"
+#include "TIFFEncoder.cpp"
 #include <cstring>
 #include <streambuf>
 #include <cstdio>
 #include <png.h>
 #include <turbojpeg.h>
 
-#include <tiffio.h>
-#include <tiffio.hxx>
 #include <sstream>
 
 #include <boost/interprocess/streams/bufferstream.hpp>
@@ -39,16 +38,6 @@ public:
 protected:
   png_structp mPng_ptr = nullptr;
   png_infop mInfo_ptr = nullptr;
-};
-
-class TiffEncoder : public EncoderInterface{
-public:
-
-public:
-    bool encode(uchar *_uncompressedPtr, const int _width, const int _height, const int _channels,
-                std::vector<uchar> &_compressedPtr, std::size_t &_fileSize, const int JPEG_QUALITY) {
-        return false;
-    }
 };
 
 std::unique_ptr<EncoderInterface>
