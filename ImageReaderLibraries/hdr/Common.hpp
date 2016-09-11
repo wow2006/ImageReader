@@ -34,6 +34,23 @@ protected:
     std::chrono::_V2::system_clock::time_point t1;
 };
 
+enum class ImageFormat {
+  None = -1,
+  JPEG = 0,
+  PNG,
+  GIF,
+  TIF,
+};
+
+enum class PixelFormat {
+    None = -1,
+    Gray = 0,
+    RGB8,
+    YUV,
+    Bayer,
+    NV12
+};
+
 template<typename T>
 struct RGB{
     T R;
@@ -41,13 +58,13 @@ struct RGB{
     T B;
 };
 
+using RGB8 = RGB<uchar>;
+
 static inline void
 writeImage(const std::string& _imageName, char* _data, const std::size_t fileSize){
     std::ofstream out(_imageName, std::ofstream::binary);
     out.write(_data, fileSize);
     out.close();
 }
-
-using RGB8 = RGB<uchar>;
 
 #endif //COMMON_HPP

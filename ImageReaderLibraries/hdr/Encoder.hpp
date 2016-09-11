@@ -13,7 +13,7 @@ namespace Encoder {
                        std::vector<uchar> &_compressedPtr, std::size_t& _fileSize, const int JPEG_QUALITY = 75) = 0;
     };
 
-    std::unique_ptr<EncoderInterface> getEncoder(BaseImage::ImageFormat _format);
+    std::unique_ptr<EncoderInterface> getEncoder(ImageFormat _format);
 }
 
 #endif //!DECODER_HPP

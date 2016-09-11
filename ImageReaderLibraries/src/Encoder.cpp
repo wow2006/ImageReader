@@ -41,22 +41,22 @@ protected:
 };
 
 std::unique_ptr<EncoderInterface>
-getEncoder(BaseImage::ImageFormat _format) {
+getEncoder(ImageFormat _format) {
     std::unique_ptr<EncoderInterface> temp;
     switch (_format) {
-        case BaseImage::ImageFormat::PNG:
+        case ImageFormat::PNG:
             temp.reset(new PngEncoder());
         break;
-        case BaseImage::ImageFormat::JPEG:
+    case ImageFormat::JPEG:
             temp.reset(new JpegEncoder());
         break;
-    case BaseImage::ImageFormat::TIF:
+    case ImageFormat::TIF:
             temp.reset(new TiffEncoder());
         break;
-    case BaseImage::ImageFormat::GIF:
+    case ImageFormat::GIF:
         std::runtime_error("GIF is not supported!");
         break;
-    case BaseImage::ImageFormat::None:
+    case ImageFormat::None:
         std::runtime_error("No Supprted Format Found!");
         break;
   }

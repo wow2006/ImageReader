@@ -1,6 +1,7 @@
 project(ImageReader)
 cmake_minimum_required(VERSION 3.4)
 
+find_package(Boost REQUIRED COMPONENTS program_options)
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   add_definitions("/W2")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")

@@ -1,6 +1,5 @@
 project(GUI)
 
-find_package(Boost REQUIRED COMPONENTS program_options)
 find_package(Qt5Widgets REQUIRED)
 set(CMAKE_AUTOMOC ON)
 

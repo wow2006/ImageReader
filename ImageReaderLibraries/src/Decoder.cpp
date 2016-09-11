@@ -100,24 +100,24 @@ namespace Decoder{
     };
 
     std::unique_ptr<DecoderInterface>
-    getDecoder(BaseImage::ImageFormat _format) {
+    getDecoder(ImageFormat _format) {
         std::unique_ptr<DecoderInterface> decoder(nullptr);
 
         switch (_format)
         {
-            case BaseImage::ImageFormat::None:
+            case ImageFormat::None:
                 throw std::runtime_error("None Image Format\n");
                 break;
-            case BaseImage::ImageFormat::JPEG:
+            case ImageFormat::JPEG:
                 decoder.reset(new JPEG_Decoder());
                 break;
-            case BaseImage::ImageFormat::PNG:
+            case ImageFormat::PNG:
                 decoder.reset(new PNG_Decoder());
                 break;
-            case BaseImage::ImageFormat::GIF:
+            case ImageFormat::GIF:
                 throw std::runtime_error("GIF is not supported.\n");
                 break;
-            case BaseImage::ImageFormat::TIF:
+            case ImageFormat::TIF:
                 decoder.reset(new TiffDecoder());
                 break;
             default:

@@ -22,7 +22,7 @@ main(int argc, char *argv[]) {
   uchar* outPtr = nullptr;
   int width = 0, height = 0, channel = 0;
   {
-      auto decoder = Decoder::getDecoder(BaseImage::ImageFormat::PNG);
+      auto decoder = Decoder::getDecoder(ImageFormat::PNG);
 
       std::ifstream file(argv[1], std::ifstream::binary | std::ifstream::ate);
       std::size_t fileSize = file.tellg();

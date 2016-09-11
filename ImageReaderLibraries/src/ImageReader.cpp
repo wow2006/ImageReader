@@ -15,13 +15,13 @@ auto getEncoder(const std::string& _fileName){
     auto& exten = strs.back();
     std::unique_ptr<Encoder::EncoderInterface> ptr;
     if(exten == "jpeg" || exten == "jpg"){
-        ptr = Encoder::getEncoder(BaseImage::ImageFormat::JPEG);
+        ptr = Encoder::getEncoder(ImageFormat::JPEG);
     }
     else if(exten == "png"){
-        ptr = Encoder::getEncoder(BaseImage::ImageFormat::PNG);
+        ptr = Encoder::getEncoder(ImageFormat::PNG);
     }
     else if(exten == "tif" || exten == "tiff"){
-        ptr = Encoder::getEncoder(BaseImage::ImageFormat::TIF);
+        ptr = Encoder::getEncoder(ImageFormat::TIF);
     }
     return std::move(ptr);
 }
@@ -119,9 +119,6 @@ bool BaseImage::save(const std::string &_imageName, const int JPEG_QUALITY) {
         return true;
     }
     return false;
-}
-
-BaseImage::~BaseImage() {
 }
 
 void BaseImage::readImage(const std::vector<uchar>& _ptr,

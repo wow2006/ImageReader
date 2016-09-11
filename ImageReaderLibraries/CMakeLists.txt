@@ -1,6 +1,5 @@
 project(ImageViewerLibraries)
 
-find_package(Boost COMPONENTS program_options REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(PNG REQUIRED)
 find_package(TIFF REQUIRED)

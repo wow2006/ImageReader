@@ -15,7 +15,7 @@ namespace Decoder{
                              int &_width, int &_height, int &_channel) = 0;
     };
 
-    std::unique_ptr<DecoderInterface> getDecoder(BaseImage::ImageFormat _format);
+    std::unique_ptr<DecoderInterface> getDecoder(ImageFormat _format);
 }
 
 #endif // !DECODER_HPP
