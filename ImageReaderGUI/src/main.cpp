@@ -53,6 +53,7 @@ main(int argc, char* argv[]){
         std::cout << "Reading " << args.first << std::endl;
 
         BaseImage im(args.first);
+        im.convert();
         im.save(args.second);
 
         std::cout << "Done!\nIt take " << t.end<std::chrono::milliseconds>() << " ms\n";

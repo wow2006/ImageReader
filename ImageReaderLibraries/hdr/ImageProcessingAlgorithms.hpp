@@ -3,9 +3,50 @@
 #pragma once
 #include <cmath>
 #include <functional>
-#include <vector>
-#include "Common.hpp"
 #include "ImageReader.hpp"
+
+namespace ConvertImageFormat{
+template<template<typename> typename T = RGB, typename I = uchar>
+std::vector<I> toSoA(const std::vector<I>&  _ptr, const int _width, const int _height){
+    using pixel = T<I>;
+
+    auto temp = std::vector<I>(_ptr.size());
+    auto imageSize = _width * _height;
+
+    auto tempR = temp.data();
+    auto tempB = tempR + imageSize;
+    auto tempG = tempB + imageSize;
+
+    auto ptr = reinterpret_cast<pixel const*>(&_ptr[0]);
+    for(int j = 0; j < _height; ++j){
+        for(int i = 0; i < _width; ++i){
+            auto tempPixel = *ptr++;
+            *tempR++ = tempPixel.R;
+            *tempG++ = tempPixel.G;
+            *tempB++ = tempPixel.B;
+        }
+    }
+    return temp;
+}
+template<template<typename> typename T = RGB, typename I = uchar>
+std::vector<I> toAoS(const std::vector<I>& _ptr, const int _width, const int _height){
+    using pixel = T<I>;
+
+    auto imageSize = _width * _height;
+    auto tempR = _ptr.data();
+    auto tempB = tempR + imageSize;
+    auto tempG = tempB + imageSize;
+
+    auto temp = std::vector<I>(_ptr.size());
+    auto ptr = reinterpret_cast<pixel*>(&temp[0]);
+    for(int j = 0; j < _height; ++j){
+        for(int i = 0; i < _width; ++i){
+            *ptr++ = {*tempR++, *tempG++, *tempB++};
+        }
+    }
+    return temp;
+}
+}
 
 namespace Scale{
     std::vector<uchar>
@@ -26,7 +67,7 @@ namespace Scale{
             }
         }
 
-        return std::move(output);
+        return output;
     }
 
     std::vector<uchar>

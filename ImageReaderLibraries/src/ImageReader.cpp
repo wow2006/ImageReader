@@ -3,6 +3,7 @@
 #include "ImageReader.hpp"
 #include "Decoder.hpp"
 #include "Encoder.hpp"
+#include "ImageProcessingAlgorithms.hpp"
 
 namespace ImageFormatUtility {
 
@@ -81,8 +82,6 @@ static bool checkTIF(uchar header[4]) {
 }
 }
 
-using namespace ImageFormatUtility;
-
 BaseImage::BaseImage(const std::string &_imageName) {
     open(_imageName);
 }
@@ -121,18 +120,24 @@ bool BaseImage::save(const std::string &_imageName, const int JPEG_QUALITY) {
     return false;
 }
 
+void BaseImage::convert()
+{
+    auto x = ConvertImageFormat::toSoA(mImagePtr, mWidth, mHeight);
+    mImagePtr = ConvertImageFormat::toAoS(x, mWidth, mHeight);
+}
+
 void BaseImage::readImage(const std::vector<uchar>& _ptr,
                           ImageFormat &_imageFormat) {
   uchar header[8]{0};
 
   std::memcpy(header, _ptr.data(), 8);
 
-  if (checkJPEG(header))
+  if (ImageFormatUtility::checkJPEG(header))
     _imageFormat = ImageFormat::JPEG;
-  else if (checkPNG(header))
+  else if (ImageFormatUtility::checkPNG(header))
     _imageFormat = ImageFormat::PNG;
-  else if (checkGIF(header))
+  else if (ImageFormatUtility::checkGIF(header))
     _imageFormat = ImageFormat::GIF;
-  else if (checkTIF(header))
+  else if (ImageFormatUtility::checkTIF(header))
     _imageFormat = ImageFormat::TIF;
 }

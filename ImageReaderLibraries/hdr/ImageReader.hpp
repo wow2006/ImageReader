@@ -16,7 +16,7 @@ struct rowAccess{
 class BaseImage {
 public:
   BaseImage(){}
-  BaseImage(const std::string &_imageName);
+  explicit BaseImage(const std::string &_imageName);
   virtual ~BaseImage(){}
 
   bool open(const std::string &_imageName);
@@ -30,6 +30,8 @@ public:
       return rowAccess<RGB, uchar>(&mImagePtr[_index * mWidth * mChannels]);
   }
 
+  void convert();
+
 protected:
   std::vector<uchar> mImagePtr;
   int mWidth = 0, mHeight = 0, mChannels = 0;
@@ -38,6 +40,7 @@ protected:
 
 private:
   static void readImage(const std::vector<uchar>&, ImageFormat &_imageFormat);
+
   BaseImage(const BaseImage &) = delete;
   void operator=(const BaseImage &) = delete;
 
