@@ -2,9 +2,7 @@
 #define DECODER_HPP
 
 #pragma once
-#include "Common.hpp"
 #include "ImageReader.hpp"
-#include <memory>
 
 namespace Decoder{
     class DecoderInterface{
