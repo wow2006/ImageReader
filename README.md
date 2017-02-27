@@ -22,6 +22,15 @@ $ sudo dnf install turbojpeg-devel.x86_64
 $ sudo dnf install libpng-devel.x86_64
 $ sudo dnf install libtiff-devel.x86_64
 ```
+### Ubuntu 16.04
+```sh
+$ sudo apt install cmake cmake-qt-gui
+$ sudo apt install qtcreator
+$ sudo apt install libboost-all-dev
+$ sudo apt install libjpeg-turbo8-dev
+$ sudo apt install libpng++-dev
+$ sudo apt install libtiff5-dev
+```
 
 ### Usage
 ```c++
