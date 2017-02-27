@@ -29,12 +29,22 @@ void mainDialog::on_openFileButton_clicked()
 
     _image.open(fileName);
     ptr = _image.get();
+    if(ptr == nullptr){
+        qDebug() << "Error reading Image";
+        return;
+    }
 
     qDebug() << _image.getWidth() << ", " <<  _image.getHeight() << '\n';
 
-    QImage image(_image.get(), _image.getWidth(), _image.getHeight(),
+    QImage image(ptr, _image.getWidth(), _image.getHeight(),
                  // Find Better way to wrap our format with Qt Format
-                 QImage::Format_RGBA8888);
+                 QImage::Format_RGB888);
+
+    if(image.isNull()){
+        qDebug() << "Error reading Image";
+        return;
+    }
+
     ui->imageLabel->setPixmap(QPixmap::fromImage(image));
 }
 
@@ -46,13 +56,6 @@ void mainDialog::on_saveFileButton_clicked()
                                                     tr("Image Files (*.png *.jpg *.bmp)"));
     std::cout << fileName.toStdString() << '\n';
 
-    std::vector<uchar> output;
-    std::size_t fileSize = 0;
-    auto encoder = Encoder::EncoderInterface::getEncoder(ImageFormat::TIF);
-    encoder->encode(_image.get(), _image.getWidth(), _image.getHeight(), _image.getChannels(),
-                    output, fileSize);
-
-    std::ofstream filehandler(fileName.toStdString(), std::ofstream::binary);
-    filehandler.write(reinterpret_cast<char*>(output.data()), fileSize);
-    filehandler.close();
+    _image.save(fileName.toStdString());
+    return;
 }
