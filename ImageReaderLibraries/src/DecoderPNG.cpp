@@ -1,4 +1,5 @@
 #include "Decoder.hpp"
+#include <cstring>
 #include <png++/png.hpp>
 #include <png++/rgb_pixel.hpp>
 

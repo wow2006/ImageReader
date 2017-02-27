@@ -6,6 +6,8 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   add_definitions("/W2")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   add_definitions("-Wall -std=c++14")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    add_definitions("-Wall -std=c++14 -fcolor-diagnostics")
 endif()
 
 add_subdirectory(ImageReaderLibraries)
