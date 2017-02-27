@@ -40,8 +40,10 @@ protected:
   png_infop mInfo_ptr = nullptr;
 };
 
+EncoderInterface::~EncoderInterface(){}
+
 std::unique_ptr<EncoderInterface>
-getEncoder(ImageFormat _format) {
+EncoderInterface::getEncoder(ImageFormat _format) {
     std::unique_ptr<EncoderInterface> temp;
     switch (_format) {
         case ImageFormat::PNG:

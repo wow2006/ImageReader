@@ -63,7 +63,7 @@ using RGB8 = RGB<uchar>;
 static inline void
 writeImage(const std::string& _imageName, char* _data, const std::size_t fileSize){
     std::ofstream out(_imageName, std::ofstream::binary);
-    out.write(_data, fileSize);
+    out.write(_data, static_cast<long>(fileSize));
     out.close();
 }
 

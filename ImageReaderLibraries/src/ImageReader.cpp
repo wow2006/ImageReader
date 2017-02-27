@@ -16,13 +16,13 @@ auto getEncoder(const std::string& _fileName){
     auto& exten = strs.back();
     std::unique_ptr<Encoder::EncoderInterface> ptr;
     if(exten == "jpeg" || exten == "jpg"){
-        ptr = Encoder::getEncoder(ImageFormat::JPEG);
+        ptr = Encoder::EncoderInterface::getEncoder(ImageFormat::JPEG);
     }
     else if(exten == "png"){
-        ptr = Encoder::getEncoder(ImageFormat::PNG);
+        ptr = Encoder::EncoderInterface::getEncoder(ImageFormat::PNG);
     }
     else if(exten == "tif" || exten == "tiff"){
-        ptr = Encoder::getEncoder(ImageFormat::TIF);
+        ptr = Encoder::EncoderInterface::getEncoder(ImageFormat::TIF);
     }
     return std::move(ptr);
 }
@@ -101,7 +101,7 @@ BaseImage::open(const std::string &_imageName){
 
     readImage(ptr, mImageFormat);
 
-    auto decoder = Decoder::getDecoder(mImageFormat);
+    auto decoder = Decoder::DecoderInterface::getDecoder(mImageFormat);
     if(decoder)
         return decoder->decode(ptr, mImagePtr, mWidth, mHeight, mChannels);
     return false;

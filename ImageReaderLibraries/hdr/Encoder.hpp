@@ -7,13 +7,13 @@
 namespace Encoder {
     class EncoderInterface{
     public:
-        virtual ~EncoderInterface(){}
+        virtual ~EncoderInterface();
 
         virtual bool encode(uchar *_uncompressedPtr, const int _width, const int _height, const int _channels,
                        std::vector<uchar> &_compressedPtr, std::size_t& _fileSize, const int JPEG_QUALITY = 75) = 0;
-    };
 
-    std::unique_ptr<EncoderInterface> getEncoder(ImageFormat _format);
+        static std::unique_ptr<EncoderInterface> getEncoder(ImageFormat _format);
+    };
 }
 
 #endif //!DECODER_HPP

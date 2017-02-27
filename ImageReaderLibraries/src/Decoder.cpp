@@ -5,8 +5,10 @@
 #include "DecoderTIFF.cpp"
 
 namespace Decoder{
+    DecoderInterface::~DecoderInterface(){}
+
     std::unique_ptr<DecoderInterface>
-    getDecoder(ImageFormat _format) {
+    DecoderInterface::getDecoder(ImageFormat _format) {
         std::unique_ptr<DecoderInterface> decoder(nullptr);
 
         switch (_format)
@@ -25,9 +27,6 @@ namespace Decoder{
                 break;
             case ImageFormat::TIF:
                 decoder.reset(new TiffDecoder());
-                break;
-            default:
-                throw std::runtime_error("Undefined Type.\n");
                 break;
         }
 

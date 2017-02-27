@@ -48,7 +48,7 @@ void mainDialog::on_saveFileButton_clicked()
 
     std::vector<uchar> output;
     std::size_t fileSize = 0;
-    auto encoder = Encoder::getEncoder(ImageFormat::TIF);
+    auto encoder = Encoder::EncoderInterface::getEncoder(ImageFormat::TIF);
     encoder->encode(_image.get(), _image.getWidth(), _image.getHeight(), _image.getChannels(),
                     output, fileSize);
 
