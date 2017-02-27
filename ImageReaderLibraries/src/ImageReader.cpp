@@ -24,7 +24,7 @@ auto getEncoder(const std::string& _fileName){
     else if(exten == "tif" || exten == "tiff"){
         ptr = Encoder::EncoderInterface::getEncoder(ImageFormat::TIF);
     }
-    return std::move(ptr);
+    return ptr;
 }
 
 static bool checkJPEG(uchar header[4]) {

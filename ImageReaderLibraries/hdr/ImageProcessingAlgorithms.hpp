@@ -88,7 +88,7 @@ namespace Scale{
             }
         }
 
-        return std::move(output);
+        output;
     }
 
     std::vector<uchar>
@@ -110,7 +110,7 @@ namespace Scale{
             }
         }
 
-        return std::move(output);
+        return output;
     }
 
     std::vector<uchar>
@@ -136,7 +136,7 @@ namespace Scale{
             }
         }
 
-        return std::move(output);
+        return output;
     }
 }
 

@@ -1,17 +1,11 @@
-#ifndef TIFF_ENCODER_CPP
-#define TIFF_ENCODER_CPP
-#include "Encoder.hpp"
+#include "EncoderTIFF.hpp"
 #include <tiffio.h>
 #include <tiffio.hxx>
 #include <sstream>
 #include <cstring>
 
 namespace Encoder {
-class TiffEncoder : public EncoderInterface{
-public:
-
-public:
-    bool encode(uchar *_uncompressedPtr, const int _width, const int _height, const int _channels,
+    bool TiffEncoder::encode(uchar *_uncompressedPtr, const int _width, const int _height, const int _channels,
                 std::vector<uchar> &_compressedPtr, std::size_t &_fileSize, const int JPEG_QUALITY) {
         std::ostringstream output_TIFF_stream;
         TIFF* tif = TIFFStreamOpen("MemTIFF", &output_TIFF_stream);
@@ -43,6 +37,4 @@ public:
         std::memcpy(_compressedPtr.data(), output_TIFF_stream.str().data(), _fileSize);
         return true;
     }
-};
 }
-#endif // !TIFF_ENCODER_CPP
