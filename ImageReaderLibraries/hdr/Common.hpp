@@ -9,9 +9,39 @@
 #include <string>
 #include <memory>
 #include <chrono>
+#include <boost/format.hpp>
 
 using uchar = unsigned char;
 using uint = unsigned int;
+
+template<typename T>
+struct TimerName{
+    static std::string type(){
+        return typeid(T).name();
+    }
+};
+
+template<>
+struct TimerName<std::chrono::seconds>{
+    static std::string type(){
+        return std::string("seconds");
+    }
+};
+
+template<>
+struct TimerName<std::chrono::milliseconds>{
+    static std::string type(){
+        return std::string("milliseconds");
+    }
+};
+
+template<>
+struct TimerName<std::chrono::nanoseconds>{
+    static std::string type(){
+        return std::string("nanoseconds");
+    }
+};
+
 
 struct Timer{
     Timer(){
@@ -28,6 +58,15 @@ struct Timer{
         auto t2 = std::chrono::high_resolution_clock::now();
 
         return std::chrono::duration_cast<_castTime>(t2-t1).count();
+    }
+
+    template<class _castTime>
+    void end(std::ostream& _stream, std::string _prefix){
+        const auto t2 = std::chrono::high_resolution_clock::now();
+        _stream << boost::format("%1% : %2% %3%\n")
+            % ((_prefix.empty()) ? "Time : " : std::move(_prefix))
+            %  std::chrono::duration_cast<_castTime>(t2-t1).count()
+            % TimerName<_castTime>::type();
     }
 
 protected:

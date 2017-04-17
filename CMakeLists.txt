@@ -1,19 +1,20 @@
 project(ImageReader)
 cmake_minimum_required(VERSION 3.4)
 
-find_package(Boost REQUIRED COMPONENTS program_options)
-if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  add_definitions("/W2")
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    set (CMAKE_CXX_STANDARD 14)
-  add_definitions("-Wall")
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    set (CMAKE_CXX_STANDARD 14)
-    add_definitions("-Wall -fcolor-diagnostics")
-endif()
+# include init file macro and cmake modules
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/init.cmake)
 
+# option for enable GUI
+option(BUILD_GUI "BUILD GUI using Qt5" OFF)
+
+# Find Boost program_options and format
+find_package(Boost REQUIRED COMPONENTS program_options)
+
+# main package
 add_subdirectory(ImageReaderLibraries)
-add_subdirectory(ImageReaderGUI)
+if(BUILD_GUI)
+    add_subdirectory(ImageReaderGUI)
+endif()
 
 # TODO
 option(TestCase OFF "Enable Test Case")

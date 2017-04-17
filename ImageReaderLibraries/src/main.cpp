@@ -11,9 +11,6 @@ const unsigned ArrayHolder<args...>::data[sizeof...(args)] = { args... };
 
 int
 main(int argc, char *argv[]) {
-    //std::cout << ArrayHolder<1, 2, 3>::data[0] << std::endl;
-    //return 0;
-
   if (argc != 3){
       std::cerr << "Useage:\n" << argv[0] << " image1 image2\n";
       return 1;
@@ -38,6 +35,7 @@ main(int argc, char *argv[]) {
       << "Image width : " << width
       << ", height : " << height
       << ", channel : " << channel << '\n';
+
   {
       std::ofstream outputFile("Lenna.bin", std::ofstream::binary);
       outputFile.write(reinterpret_cast<char*>(outPtr), width * height * channel);
