@@ -1,39 +1,6 @@
-# This file is NOT licensed under the GPLv3, which is the license for the rest
-# of YouCompleteMe.
-#
-# Here's the license text for this file:
-#
-# This is free and unencumbered software released into the public domain.
-#
-# Anyone is free to copy, modify, publish, use, compile, sell, or
-# distribute this software, either in source code form or as a compiled
-# binary, for any purpose, commercial or non-commercial, and by any
-# means.
-#
-# In jurisdictions that recognize copyright laws, the author or authors
-# of this software dedicate any and all copyright interest in the
-# software to the public domain. We make this dedication for the benefit
-# of the public at large and to the detriment of our heirs and
-# successors. We intend this dedication to be an overt act of
-# relinquishment in perpetuity of all present and future rights to this
-# software under copyright law.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-# IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-# OTHER DEALINGS IN THE SOFTWARE.
-#
-# For more information, please refer to <http://unlicense.org/>
-
 import os
 import ycm_core
 
-# These are the compilation flags that will be used in case there's no
-# compilation database set (by default, one is not set).
-# CHANGE THIS LIST OF FLAGS. YES, THIS IS THE DROID YOU HAVE BEEN LOOKING FOR.
 flags = [
 '-Wall',
 '-Wextra',
@@ -41,45 +8,96 @@ flags = [
 '-Wno-variadic-macros',
 '-fexceptions',
 '-DNDEBUG',
-# You 100% do NOT need -DUSE_CLANG_COMPLETER in your flags; only the YCM
-# source code needs it.
 '-DUSE_CLANG_COMPLETER',
-# THIS IS IMPORTANT! Without a "-std=<something>" flag, clang won't know which
-# language to use when compiling headers. So it will guess. Badly. So C++
-# headers will be compiled as C headers. You don't want that so ALWAYS specify
-# a "-std=<something>".
-# For a C project, you would set this to something like 'c99' instead of
-# 'c++11'.
-'-std=c++11',
-# ...and the same thing goes for the magic -x option which specifies the
-# language that the files to be compiled are written in. This is mostly
-# relevant for c++ headers.
-# For a C project, you would set this to 'c' instead of 'c++'.
+'-std=c++14',
 '-x',
 'c++',
-'-isystem',
-'../BoostParts',
-'-isystem',
-# This path will only work on OS X, but extra paths that don't exist are not
-# harmful
-'/System/Library/Frameworks/Python.framework/Headers',
-'-isystem',
-'../llvm/include',
-'-isystem',
-'../llvm/tools/clang/include',
-# Global
-'-I', '/usr/include',
-'-I', '/usr/local/include',
-'-I', '/usr/include/c++/5.3.1/',
-'-I', '/usr/include/qt',
-'-I', '/usr/include/qt/QtCore',
-'-I', '/usr/include/qt/QtGui',
-'-I', '/usr/include/qt/QtWidgets',
-# Project
-'-I', '.',
-'-I', './ImageReaderGUI/hdr',
-'-I', './ImageReaderLibraries/hdr',
-'-I', './build/Debug/ImageReaderGUI',
+# current Project
+'-I./ImageReaderGUI/hdr/',
+'-I./ImageReaderLibraries/hdr/',
+# system
+'-I/usr/include/',
+'-I/usr/include/x86_64-linux-gnu',
+# QT5
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtInputSupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtWebView/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtDeviceDiscoverySupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtGamepad/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtQuick/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtSvg/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtWebEngine/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtConcurrent/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtXmlPatterns/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtLinuxAccessibilitySupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtBluetooth/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtQml/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/Qt3DInput/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtScxml/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtEglSupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtScript/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtCLucene/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtQmlDevTools/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtFontDatabaseSupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/Qt3DCore/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtFbSupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtGlxSupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtServiceSupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtQuickTemplates2/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtEglFSDeviceIntegration/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtPacketProtocol/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtQuickTest/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtSerialPort/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtQuickControls2/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtMultimedia/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtOpenGLExtensions/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtNetworkAuth/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtDesigner/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtWidgets/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/Qt3DLogic/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtThemeSupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtGui/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtSensors/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtNetwork/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtHelp/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtAccessibilitySupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtXml/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/Qt3DQuickRender/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtLocation/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtNfc/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/Qt3DQuickExtras/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtScriptTools/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtTest/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtOpenGL/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtPlatformHeaders/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtQuickWidgets/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtMultimediaWidgets/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtDesignerComponents/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtQmlDebug/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtEventDispatcherSupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtMultimediaQuick_p/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtPlatformCompositorSupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtSerialBus/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtDataVisualization/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtPurchasing/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtWebSockets/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtCharts/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtSql/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtUiPlugin/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtPositioning/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtUiTools/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/Qt3DQuick/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/Qt3DQuickInput/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtTextToSpeech/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtWebEngineWidgets/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtWebChannel/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/Qt3DExtras/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtPrintSupport/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtDBus/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtCore/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/Qt3DRender/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtX11Extras/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtQuickParticles/',
+'-I/home/ahussein/Qt5.8.0/5.8/gcc_64/include/QtWebEngineCore/',
 ]
 
 
@@ -181,7 +199,4 @@ def FlagsForFile( filename, **kwargs ):
     relative_to = DirectoryOfThisScript()
     final_flags = MakeRelativePathsInFlagsAbsolute( flags, relative_to )
 
-  return {
-    'flags': final_flags,
-    'do_cache': True
-  }
+  return { 'flags': final_flags }
