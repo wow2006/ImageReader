@@ -22,7 +22,7 @@ public:
   bool open(const std::string &_imageName);
   bool save(const std::string &_imageName, const int JPEG_QUALITY = 75);
 
-  inline uchar *get() { return mImagePtr.data(); }
+  inline uchar *get() { return (mImagePtr.empty()) ? mImagePtr.data() : nullptr; }
   inline int getWidth() const { return mWidth; }
   inline int getHeight() const { return mHeight; }
   inline int getChannels() const { return mChannels; }

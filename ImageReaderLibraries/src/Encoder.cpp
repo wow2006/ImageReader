@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "Encoder.hpp"
 #include "EncoderTIFF.hpp"
 #include "EncoderJPEG.hpp"
@@ -6,29 +10,29 @@
 
 namespace Encoder {
 
-EncoderInterface::~EncoderInterface(){}
+EncoderInterface::~EncoderInterface() = default;
 
-std::unique_ptr<EncoderInterface>
-EncoderInterface::getEncoder(ImageFormat _format) {
-    std::unique_ptr<EncoderInterface> temp;
-    switch (_format) {
-        case ImageFormat::PNG:
-            temp.reset(new PngEncoder());
-        break;
+std::unique_ptr<EncoderInterface> EncoderInterface::getEncoder(
+    ImageFormat _format) {
+  std::unique_ptr<EncoderInterface> temp;
+  switch (_format) {
+    case ImageFormat::PNG:
+      temp = std::make_unique<PngEncoder>();
+      break;
     case ImageFormat::JPEG:
-            temp.reset(new JpegEncoder());
-        break;
+      temp = std::make_unique<JpegEncoder>();
+      break;
     case ImageFormat::TIF:
-            temp.reset(new TiffEncoder());
-        break;
+      temp = std::make_unique<TiffEncoder>();
+      break;
     case ImageFormat::GIF:
-        std::runtime_error("GIF is not supported!");
-        break;
+      throw std::runtime_error("GIF is not supported!");
+      break;
     case ImageFormat::None:
-        std::runtime_error("No Supprted Format Found!");
-        break;
+      throw std::runtime_error("No Supprted Format Found!");
+      break;
   }
   return temp;
 }
 
-}
+}  // namespace Encoder
