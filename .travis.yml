@@ -1,0 +1,15 @@
+sudo: required
+before_install:
+  - sudo apt install libboost-all-dev
+  - sudo apt install libjpeg-turbo8-dev
+  - sudo apt install libpng++-dev
+  - sudo apt install libtiff5-dev
+  - sudo apt install cmake
+language: cpp
+compiler:
+  - gcc
+script:
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
